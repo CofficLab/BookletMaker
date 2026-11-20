@@ -17,3 +17,5 @@ DerivedData/
 
 # CocoaPods (not used but safe to ignore)
 Pods/
+xcuserdata/
+xcodecloud/
