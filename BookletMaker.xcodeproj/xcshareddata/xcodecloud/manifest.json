@@ -1,0 +1,9 @@
+{
+  "id" : "65f7c78d-8db6-4471-9439-72833aa1fbc4",
+  "targets" : [
+    {
+      "id" : "DAFCEF0D-9554-4EC2-B94B-6781C42649B5",
+      "name" : "BookletMaker"
+    }
+  ]
+}
