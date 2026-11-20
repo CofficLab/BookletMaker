@@ -1,0 +1,283 @@
+{
+  "default-configuration": "Release",
+  "configurations": [
+    { "name": "Debug" },
+    { "name": "Release" },
+  ],
+  "localizations": {
+    "development": "en",
+    "supported": [
+      "Base",
+      "zh-Hans",
+      "zh-Hant",
+    ],
+  },
+  "packages": [
+    {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiFactory.git",
+      "version": {
+        "up-to-next-major-version": "1.7.2",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiUI.git",
+      "version": {
+        "up-to-next-major-version": "1.18.1",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiSettings.git",
+      "version": {
+        "up-to-next-major-version": "1.1.2",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiPluginCommand.git",
+      "version": {
+        "up-to-next-major-version": "1.0.2",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiPluginActivityBar.git",
+      "version": {
+        "up-to-next-major-version": "1.0.5",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiPluginBookletMaker.git",
+      "version": {
+        "up-to-next-major-version": "2.2.0",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiKernel.git",
+      "version": {
+        "up-to-next-major-version": "1.1.1",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiProviders.git",
+      "version": {
+        "up-to-next-major-version": "1.26.0",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiPluginRootView.git",
+      "version": {
+        "up-to-next-major-version": "1.3.2",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiPluginSettingView.git",
+      "version": {
+        "up-to-next-major-version": "1.0.4",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiPluginSettingGeneral.git",
+      "version": {
+        "up-to-next-major-version": "1.3.0",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiPluginThemePack.git",
+      "version": {
+        "up-to-next-major-version": "1.2.2",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiPluginPluginManager.git",
+      "version": {
+        "up-to-next-major-version": "1.7.1",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiPluginAbout.git",
+      "version": {
+        "up-to-next-major-version": "3.0.4",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/lumi-softworks/LumiThemePack.git",
+      "version": {
+        "up-to-next-major-version": "1.0.13",
+      },
+    },
+  ],
+  "files": [
+    {
+      "kind": "folder",
+      "path": "BookletMakerApp",
+      "target-membership": [
+        "BookletMaker",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "BookletMaker",
+          "exclusions": [
+            "BookletMaker-Info.plist",
+            "BookletMaker-iOS-Info.plist",
+            "BookletMaker-visionOS-Info.plist",
+            "BookletMaker.icns",
+            "BookletMaker.xcconfig",
+          ],
+        },
+      ],
+    },
+    {
+      "kind": "folder",
+      "path": "BookletMakerUITests",
+      "target-membership": [ "BookletMakerUITests" ],
+    },
+    { "path": "Config/Base.xcconfig", "index": true },
+    { "path": "Config/App-Shared.xcconfig", "index": true },
+    { "path": "BookletMakerApp/BookletMaker.xcconfig", "index": true },
+    { "path": "<PRODUCTS>/BookletMaker.app", "id": "BM0000000000000000000002", "type": "wrapper.application", "index": false },
+    { "path": "<PRODUCTS>/BookletMakerUITests.xctest", "id": "B10000000000000000000002", "type": "wrapper.cfbundle", "index": false },
+  ],
+  "targets": [
+    {
+      "name": "BookletMaker",
+      "id": "BM0000000000000000000009",
+      "product": "BookletMaker.app",
+      "product-type": "application",
+      "specialized-configurations": [
+        { "name": "Debug", "file": "BookletMakerApp/BookletMaker.xcconfig" },
+        { "name": "Release", "file": "BookletMakerApp/BookletMaker.xcconfig" },
+      ],
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+      "package-product-members": [
+        {
+          "package": "LumiFactory",
+          "product-name": "LumiFactory",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiKernel",
+          "product-name": "KernelCore",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiPluginAbout",
+          "product-name": "PluginAbout",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiPluginActivityBar",
+          "product-name": "PluginActivityBar",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiPluginBookletMaker",
+          "product-name": "PluginBookletMaker",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiPluginCommand",
+          "product-name": "PluginCommand",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiPluginPluginManager",
+          "product-name": "PluginPluginManager",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiPluginRootView",
+          "product-name": "WorkbenchRootView",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiPluginSettingGeneral",
+          "product-name": "PluginSettingGeneral",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiPluginSettingView",
+          "product-name": "PluginSettingView",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiPluginThemePack",
+          "product-name": "PluginThemePack",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiProviders",
+          "product-name": "ProviderActivityBar",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiProviders",
+          "product-name": "ProviderContentView",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiProviders",
+          "product-name": "ProviderRailView",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiProviders",
+          "product-name": "ProviderRootView",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiProviders",
+          "product-name": "ProviderStorage",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiProviders",
+          "product-name": "ProviderTheme",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiProviders",
+          "product-name": "ProviderToolbar",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiProviders",
+          "product-name": "ProviderUninstall",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiSettings",
+          "product-name": "ProviderSettingView",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiUI",
+          "product-name": "LumiUI",
+          "build-phase": { "build-phase": "frameworks" },
+        },
+      ],
+      "build-settings": {
+        "INFOPLIST_KEY_CFBundleDisplayName": "BookletMaker",
+        "INFOPLIST_KEY_ITSAppUsesNonExemptEncryption": "NO",
+        "INFOPLIST_KEY_LSApplicationCategoryType": "public.app-category.utilities",
+      },
+    }, {
+      "name": "BookletMakerUITests",
+      "id": "B10000000000000000000001",
+      "product": "BookletMakerUITests.xctest",
+      "product-type": "bundle.ui-testing",
+      "test-host-target": "BookletMaker",
+      "dependencies": [
+        "BookletMaker",
+      ],
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+      "build-settings": {
+        "CODE_SIGN_IDENTITY": "Apple Development",
+        "CODE_SIGN_STYLE": "Automatic",
+        "DEVELOPMENT_TEAM": "Y6HZ9JJYV6",
+        "GENERATE_INFOPLIST_FILE": "YES",
+        "IPHONEOS_DEPLOYMENT_TARGET": "17.0",
+        "MACOSX_DEPLOYMENT_TARGET": "14.0",
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.coffic.bookletmaker.uitests",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SUPPORTED_PLATFORMS": "iphonesimulator macosx",
+        "SWIFT_VERSION": "5.0",
+        "TARGETED_DEVICE_FAMILY": "1,2",
+        "TEST_TARGET_NAME": "BookletMaker",
+      },
+    },
+  ],
+  "build-settings": {
+    "DEVELOPMENT_TEAM": "Y6HZ9JJYV6",
+  },
+  "products-group": [
+  ],
+  "last-upgrade": "26.2",
+  "last-swift-update": "26.2",
+}

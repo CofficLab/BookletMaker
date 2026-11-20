@@ -1,0 +1,22 @@
+//
+// App-Shared.xcconfig
+// BookletMaker App target 共享设置，覆盖 macOS 与 iOS 两类目标。
+//
+
+#include "Base.xcconfig"
+
+// 运行时
+DEAD_CODE_STRIPPING = YES
+ENABLE_HARDENED_RUNTIME = YES
+ENABLE_PREVIEWS = YES
+COMBINE_HIDPI_IMAGES = YES
+
+// Info.plist 自动生成
+GENERATE_INFOPLIST_FILE = YES
+// 出口合规（App Store 加密豁免）：本项目仅使用豁免加密
+//（HTTPS / iCloud / CloudKit / 系统加密，无自定义加密算法），
+// 声明非豁免加密 = 否，避免上传 App Store / TestFlight 时反复被询问出口合规信息。
+INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO
+
+// Framework 搜索路径（macOS app）
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks
