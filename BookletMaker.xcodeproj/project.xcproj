@@ -1,8 +1,8 @@
 {
   "default-configuration": "Release",
   "configurations": [
-    { "name": "Debug" },
-    { "name": "Release" },
+    "Debug",
+    "Release",
   ],
   "localizations": {
     "development": "en",
@@ -47,7 +47,7 @@
       "kind": "remote",
       "repository": "https://github.com/lumi-softworks/LumiPluginBookletMaker.git",
       "version": {
-        "up-to-next-major-version": "2.2.2",
+        "up-to-next-major-version": "2.3.0",
       },
     }, {
       "kind": "remote",
@@ -125,11 +125,7 @@
         },
       ],
     },
-    {
-      "kind": "folder",
-      "path": "BookletMakerUITests",
-      "target-membership": [ "BookletMakerUITests" ],
-    },
+    { "kind": "folder", "path": "BookletMakerUITests", "target-membership": [ "BookletMakerUITests" ] },
     {
       "kind": "group",
       "name": "Recovered References",
@@ -209,6 +205,10 @@
         }, {
           "package": "LumiProviders",
           "product-name": "ProviderContentView",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "LumiProviders",
+          "product-name": "ProviderMobileTabBar",
           "build-phase": { "build-phase": "frameworks" },
         }, {
           "package": "LumiProviders",

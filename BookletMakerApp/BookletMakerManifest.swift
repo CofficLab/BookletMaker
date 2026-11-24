@@ -25,6 +25,7 @@ import WorkbenchRootView
 #endif
 
 #if os(iOS)
+import ProviderMobileTabBar
 import ProviderToolbar
 #endif
 
@@ -90,8 +91,15 @@ enum BookletMakerManifest {
             wireWorkbench(kernel: kernel, identity: identity)
         }
         #elseif os(iOS)
-        // 移动端根视图自带 NavigationStack，宿主自带完整壳（导航 + 设置 sheet）。
-        // 移动会话（feature）独立于设置内核：与迁移前一致，iOS 不装配业务插件。
+        // iOS 没有工作台，插件改往移动端标签注册表插入整页 UI。
+        // 宿主只提供注册表与设置 sheet，不再硬编码 iOS 功能清单：
+        // 没有贡献移动入口的插件在 iOS 上自然不出现。
+        manifest.registerProviders = { kernel in
+            try kernel.registerProvider(
+                (any MobileTabBarProviding).self,
+                DefaultMobileTabBarProviding()
+            )
+        }
         manifest.makeMainView = { kernel in
             makeMobileMainView(kernel: kernel, identity: identity)
         }
@@ -140,8 +148,8 @@ enum BookletMakerManifest {
             BookletMakerPlugin(id: bookletMakerPluginID, policy: .required),
         ]
         #elseif os(iOS)
-        // 与迁移前一致：iOS 设置内核不装配 BookletMakerPlugin，
-        // 主界面由独立的 BookletMakerMobileFeature 驱动。
+        // BookletMakerPlugin 与 macOS 装配同一份业务插件：桌面贡献工作台，
+        // iOS 贡献移动标签注册表里的整页入口。
         return [
             PluginSettingView(id: "com.coffic.lumi.plugin.setting-view"),
             SettingGeneralPlugin(configuration: generalConfiguration),
@@ -155,6 +163,7 @@ enum BookletMakerManifest {
                     termsOfServiceURLString: legalTermsOfService
                 )
             ),
+            BookletMakerPlugin(id: bookletMakerPluginID, policy: .required),
         ]
         #else
         // visionOS 没有菜单栏 / 工具栏宿主，不装配 ActivityBar / Command / About；
@@ -290,16 +299,25 @@ enum BookletMakerManifest {
         kernel: KernelCoreContainer,
         identity: HostIdentity
     ) -> AnyView {
-        let feature = BookletMakerMobileFeature()
-        guard let navigationBar = kernel.resolveProvider((any IOSNavigationBarProviding).self) else {
-            return AnyView(BookletMakerMobileRootView(feature: feature))
+        guard let tabs = kernel.resolveProvider((any MobileTabBarProviding).self) else {
+            return AnyView(
+                ContentUnavailableView(
+                    BookletMakerSharedText.string("Booklet Maker unavailable"),
+                    systemImage: "doc.on.doc"
+                )
+                .accessibilityIdentifier("booklet-maker.main.window")
+            )
         }
+        let shell = AnyView(BookletMakerMobileShell(tabs: tabs))
+        guard let navigationBar = kernel.resolveProvider((any IOSNavigationBarProviding).self) else {
+            return shell
+        }
+        // 设置仍是导航栏齿轮 + sheet：齿轮由工厂贡献到导航栏注册表，
+        // 插件页面自己把注册表项挂到页内导航栈上。
         return AnyView(
             IOSSettingsAppShell(
                 title: identity.appName,
-                mainView: AnyView(
-                    BookletMakerNavigationHost(navigationBar: navigationBar, feature: feature)
-                ),
+                mainView: shell,
                 settingsView: makeMobileSettingsView(kernel: kernel),
                 navigationBarProvider: navigationBar,
                 navigationBarMode: .host
@@ -319,29 +337,3 @@ enum BookletMakerManifest {
     }
     #endif
 }
-
-#if os(iOS)
-/// 把插件贡献的导航栏项（设置齿轮）挂到 BookletMaker 自己的导航栈上。
-///
-/// `BookletMakerMobileRootView` 内部创建了 NavigationStack，外层的 `.toolbar`
-/// 不会传进嵌套的栈，因此由根视图在栈级别挂载。
-@MainActor
-private struct BookletMakerNavigationHost: View {
-    @StateObject private var navigationItems: IOSNavigationBarItemsBridge
-    let feature: BookletMakerMobileFeature
-
-    init(navigationBar: any IOSNavigationBarProviding, feature: BookletMakerMobileFeature) {
-        _navigationItems = StateObject(
-            wrappedValue: IOSNavigationBarItemsBridge(provider: navigationBar)
-        )
-        self.feature = feature
-    }
-
-    var body: some View {
-        BookletMakerMobileRootView(
-            feature: feature,
-            trailingToolbarItems: navigationItems.items
-        )
-    }
-}
-#endif
