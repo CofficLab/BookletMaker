@@ -71,5 +71,5 @@ LD_RUNPATH_SEARCH_PATHS[sdk=xros*] = $(inherited) @executable_path/Frameworks
 LD_RUNPATH_SEARCH_PATHS[sdk=xrsimulator*] = $(inherited) @executable_path/Frameworks
 
 // 版本号
-MARKETING_VERSION = 6.2.0
-CURRENT_PROJECT_VERSION = 60
+MARKETING_VERSION = 6.3.0
+CURRENT_PROJECT_VERSION = 61
