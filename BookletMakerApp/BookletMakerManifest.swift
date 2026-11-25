@@ -237,18 +237,6 @@ enum BookletMakerManifest {
         if let toolbar = kernel.resolveProvider((any ToolbarProviding).self) {
             toolbar.addToolbarItems([settingsToolbarItem(prefix: identity.accessibilityPrefix)])
             rootView.setToolbarView(toolbar.makeToolbarView())
-
-            // 工具标签页已包含当前工具名称，移除左侧重复的标题视图。
-            // 插件在 workspace 激活时注册标题项，用 observer 在注册后异步清除。
-            var removingTitle = false
-            _ = toolbar.addToolbarObserver { _ in
-                guard !removingTitle else { return }
-                removingTitle = true
-                DispatchQueue.main.async {
-                    toolbar.removeToolbarItems(ids: ["\(bookletMakerPluginID).title"])
-                    removingTitle = false
-                }
-            }
         }
         if let activityBar = kernel.resolveProvider((any ActivityBarProviding).self) {
             rootView.setActivityBarProvider(activityBar)
