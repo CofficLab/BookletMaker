@@ -90,6 +90,11 @@ enum BookletMakerManifest {
         manifest.wireKernel = { kernel in
             wireWorkbench(kernel: kernel, identity: identity)
         }
+        // 工作台的 Rail 不在 LumiFactory 基线里：宿主必须自行注册，否则
+        // 插件贡献的侧栏（导入拖放区、参数、导出按钮）无处渲染。
+        manifest.registerProviders = { kernel in
+            try kernel.registerProvider((any RailViewProviding).self, DefaultRailViewProviding())
+        }
         #elseif os(iOS)
         // iOS 没有工作台，插件改往移动端标签注册表插入整页 UI。
         // 宿主只提供注册表与设置 sheet，不再硬编码 iOS 功能清单：
