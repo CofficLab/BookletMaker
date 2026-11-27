@@ -96,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lumi-softworks/LumiPluginBookletMaker.git",
       "state" : {
-        "revision" : "a9f9ca71e12e1dc8c352468af562eb5fae59b72d",
-        "version" : "2.6.3"
+        "revision" : "af5bbcb6ee71a6060a9e5fc33b5eec42df66807d",
+        "version" : "2.6.4"
       }
     },
     {
